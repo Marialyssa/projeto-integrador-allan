@@ -231,3 +231,88 @@ td:first-child { max-width: 180px; overflow: hidden; color: #4e5d50; font-weight
   .farm-overview { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 11px; }
   .footer { gap: 10px; font-size: 8px; }
 }
+
+
+/* Leitura mais confortável: texto maior, contraste melhor e mais espaço. */
+body { font-size: 15px; }
+.side-caption { font-size: 11px; }
+.nav-link { min-height: 46px; font-size: 14px; }
+.sidebar-tip strong { font-size: 14px; }
+.sidebar-tip p { font-size: 13px; }
+.profile strong { font-size: 13px; }
+.profile div:nth-child(2) span { font-size: 12px; }
+.breadcrumb { font-size: 13px; }
+.live-indicator { font-size: 12px; }
+.welcome-row { margin-top: 38px; margin-bottom: 30px; }
+.eyebrow { font-size: 11px; }
+h1 { font-size: 29px; }
+.subtitle { font-size: 14px; }
+.range-button { min-height: 40px; font-size: 13px; }
+.metric-grid, .content-grid, .database-details-grid { gap: 18px; }
+.metric-card { min-height: 140px; padding: 20px; }
+.metric-top { font-size: 13px; }
+.metric-value { font-size: 30px; }
+.metric-value small { font-size: 14px; }
+.metric-foot { margin-top: 7px; font-size: 12px; }
+.farm-panel { padding: 22px 24px; }
+.farm-overview { gap: 16px; padding: 17px; }
+.farm-identity strong { font-size: 14px; }
+.farm-identity small { font-size: 12px; }
+.farm-stat span { font-size: 10px; }
+.farm-stat strong { font-size: 14px; }
+.crop-summary { font-size: 12px; }
+.plot-grid { gap: 11px; margin-top: 14px; }
+.plot-card { padding: 13px; }
+.plot-card-top strong { font-size: 12px; }
+.plot-area { font-size: 11px; }
+.plot-crop { font-size: 13px; }
+.plot-soil { font-size: 11px; }
+.panel-heading h2 { font-size: 17px; }
+.panel-heading p { font-size: 12px; }
+.chart-period { font-size: 11px; }
+.chart-legend, .chart-axis { font-size: 11px; }
+.chart-empty strong { font-size: 13px; }
+.chart-empty small { font-size: 11px; }
+.text-link { font-size: 12px; }
+.integration-row { min-height: 54px; }
+.service-info strong { font-size: 13px; }
+.service-info small { font-size: 11px; }
+.integration-foot { font-size: 11px; }
+.stream-pill { font-size: 10px; }
+th { font-size: 10px; }
+td { font-size: 12px; }
+.table-status { font-size: 11px; }
+.detail-count { font-size: 11px; }
+.image-reconciliation { font-size: 11px; }
+.detail-row { min-height: 54px; }
+.detail-main strong, .detail-value { font-size: 12px; }
+.detail-main small, .detail-value small { font-size: 11px; }
+.alert-severity, .alert-state { font-size: 10px; }
+.machine-heading { font-size: 10px; }
+.machine-row { min-height: 34px; font-size: 11px; }
+.machine-row strong { font-size: 11px; }
+.machine-row small { font-size: 10px; }
+.footer { font-size: 11px; }
+
+@media (max-width: 560px) {
+  .metric-top { font-size: 11px; }
+  .metric-card { min-height: 124px; padding: 15px 13px; }
+  .metric-value { font-size: 25px; }
+  .farm-panel { padding: 17px 14px; }
+  .plot-card { padding: 10px; }
+  .plot-crop { font-size: 12px; }
+  .plot-soil, .plot-area { font-size: 10px; }
+  .panel-heading h2 { font-size: 16px; }
+  .footer { font-size: 9px; }
+}
+
+
+/* Contraste e navegação compacta em telas estreitas. */
+.subtitle, .panel-heading p, .farm-identity small, .crop-summary,
+.plot-area, .plot-soil, .metric-foot, .integration-foot,
+.service-info small, .image-reconciliation, .detail-main small,
+.detail-value small, .chart-axis, .footer { color: #69766b; }
+@media (max-width: 800px) {
+  .side-caption, .nav-link { font-size: 0; }
+  .nav-icon { font-size: 18px; }
+}
