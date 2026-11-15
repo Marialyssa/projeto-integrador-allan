@@ -1,0 +1,38 @@
+services:
+  agrogestor:
+    image: ${AGROGESTOR_IMAGE:?Defina a imagem publicada do AgroGestor}
+    container_name: agrogestor-grupo1
+    init: true
+    restart: unless-stopped
+    ports:
+      - "${HOST_PORT:-8081}:3000"
+    environment:
+      NODE_ENV: production
+      PORT: "3000"
+      MARIADB_URL: ${MARIADB_URL:?Defina MARIADB_URL nos ambientes da stack}
+      MONGODB_URI: ${MONGODB_URI:?Defina MONGODB_URI nos ambientes da stack}
+      REDIS_URL: ${REDIS_URL:?Defina REDIS_URL nos ambientes da stack}
+      MQTT_URL: ${MQTT_URL:?Defina MQTT_URL nos ambientes da stack}
+      MQTT_TOPIC: "${MQTT_TOPIC:-grupo/1/#}"
+      MINIO_ENDPOINT: ${MINIO_ENDPOINT:?Defina MINIO_ENDPOINT nos ambientes da stack}
+      MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY:?Defina MINIO_ACCESS_KEY nos ambientes da stack}
+      MINIO_SECRET_KEY: ${MINIO_SECRET_KEY:?Defina MINIO_SECRET_KEY nos ambientes da stack}
+      MINIO_BUCKET: "${MINIO_BUCKET:-grupo1}"
+      MINIO_REGION: "${MINIO_REGION:-us-east-1}"
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:3000/health').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"
+      interval: 30s
+      timeout: 5s
+      start_period: 20s
+      retries: 3

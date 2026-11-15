@@ -1,0 +1,6 @@
+node_modules/
+.env
+npm-debug.log*
+
+# Material privado da turma com dados de acesso
+PI2026-T2-acessos.pdf

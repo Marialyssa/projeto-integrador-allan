@@ -1,0 +1,19 @@
+{
+  "name": "agrogestor-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "setup": "node scripts/import-credentials.mjs",
+    "start": "node server.mjs",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.1169.0",
+    "dotenv": "^16.4.7",
+    "mariadb": "^3.4.0",
+    "mongodb": "^6.13.0",
+    "mqtt": "^5.10.3",
+    "redis": "^4.7.0"
+  }
+}

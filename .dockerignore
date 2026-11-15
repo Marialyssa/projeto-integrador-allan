@@ -1,0 +1,11 @@
+node_modules
+.git
+.env
+.env.*
+PI2026-T2-acessos.pdf
+*.docx
+*.pdf
+prints_artigo
+scripts
+test
+npm-debug.log*
