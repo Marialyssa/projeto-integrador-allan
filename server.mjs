@@ -15,8 +15,8 @@ const root = fileURLToPath(new URL(".", import.meta.url));
 const publicDir = join(root, "public");
 const port = Number(process.env.PORT || 3000);
 const groupId = "1";
-const mqttTopic = process.env.MQTT_TOPIC || `grupo/${groupId}/#`;
-if (!mqttTopic.startsWith(`grupo/${groupId}/`)) {
+const mqttTopic = process.env.MQTT_TOPIC || "fazenda/grupo1/#";
+if (!mqttTopic.startsWith("fazenda/grupo1/")) {
   throw new Error("MQTT_TOPIC deve limitar a inscrição aos dados do Grupo 1.");
 }
 const history = [];
@@ -94,6 +94,7 @@ function parseNumber(value) {
 function addReading(topic, raw) {
   if (!isGroupOneTopic(topic)) return;
   const entry = parseTelemetry(topic, raw);
+  if (!entry) return;
   history.unshift(entry);
   if (history.length > maxHistory) history.pop();
 }

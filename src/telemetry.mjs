@@ -1,34 +1,29 @@
+import { parseDatabaseReading } from "./database-data.mjs";
+
+const groupOnePrefix = "fazenda/grupo1/";
+
 export function isGroupOneTopic(topic) {
-  return topic.startsWith("grupo/1/");
+  return typeof topic === "string" && topic.startsWith(groupOnePrefix);
 }
 
 export function parseTelemetry(topic, raw, timestamp = new Date().toISOString()) {
+  const parts = topic.split("/");
+  if (!isGroupOneTopic(topic) || parts[2] !== "sensores" || !parts[3]) return null;
+
   let payload;
   try {
     payload = JSON.parse(raw.toString());
   } catch {
-    payload = { value: raw.toString() };
+    return null;
   }
+  if (!payload || typeof payload !== "object" || Array.isArray(payload)) return null;
 
-  const rawTemperature = payload.temperature ?? payload.temperatura;
-  const rawHumidity = payload.humidity ?? payload.umidade;
-  const temperature = rawTemperature === "" || rawTemperature === null || rawTemperature === undefined
-    ? Number.NaN
-    : Number(rawTemperature);
-  const humidity = rawHumidity === "" || rawHumidity === null || rawHumidity === undefined
-    ? Number.NaN
-    : Number(rawHumidity);
-  const farm = payload.farm || payload.fazenda;
-  const sensorId = payload.sensor || payload.sensor_id || payload.device_id;
-  return {
-    topic,
+  const sensor = payload.sensor || payload.sensor_id || payload.device_id || parts[3];
+  const reading = parseDatabaseReading(
+    sensor,
+    payload,
+    payload.fazenda || payload.farm || "Fazenda Santa Helena",
     timestamp,
-    farm: farm ? String(farm) : null,
-    sensorId: sensorId ? String(sensorId) : null,
-    sensor: sensorId ? String(sensorId) : "Sensor sem identificação",
-    temperature: Number.isFinite(temperature) ? temperature : null,
-    humidity: Number.isFinite(humidity) ? humidity : null,
-    value: payload.value,
-    unit: String(payload.unit || payload.unidade || ""),
-  };
+  );
+  return reading ? { ...reading, topic } : null;
 }

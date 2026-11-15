@@ -21,7 +21,7 @@ export function parseDatabaseReading(sensor, rawData, farmName, timestampFallbac
   const plot = data.talhao || null;
 
   return {
-    topic: `grupo/1/${plot || "fazenda"}/${resolvedSensor}`,
+    topic: `fazenda/grupo1/sensores/${resolvedSensor}`,
     timestamp,
     farm: farmName || "Fazenda do Grupo 1",
     sensor: resolvedSensor,

@@ -60,9 +60,9 @@ const values = {
   MONGODB_URI: `mongodb://${encode(mongo.user)}:${encode(mongo.password)}@${mongo.host}:${mongo.port}/?authSource=admin`,
   REDIS_URL: `redis://${redis.user ? `${encode(redis.user)}:` : ":"}${encode(redis.password)}@${redis.host}:${redis.port}`,
   MQTT_URL: `mqtt://${encode(mqtt.user)}:${encode(mqtt.password)}@${mqtt.host}:${mqtt.port}`,
-  MQTT_TOPIC: existing.MQTT_TOPIC && existing.MQTT_TOPIC !== "grupo/1/"
+  MQTT_TOPIC: existing.MQTT_TOPIC?.startsWith("fazenda/grupo1/")
     ? existing.MQTT_TOPIC
-    : "grupo/1/#",
+    : "fazenda/grupo1/#",
   MINIO_ENDPOINT: minioEndpoint,
   MINIO_ACCESS_KEY: apiFields[2],
   MINIO_SECRET_KEY: apiFields[3],

@@ -4,37 +4,35 @@ import { isGroupOneTopic, parseTelemetry } from "../src/telemetry.mjs";
 import { parseDatabaseReading } from "../src/database-data.mjs";
 
 test("only accepts topics scoped to Grupo 1", () => {
-  assert.equal(isGroupOneTopic("grupo/1/fazenda-2/sensor-1"), true);
-  assert.equal(isGroupOneTopic("grupo/2/fazenda-2/sensor-1"), false);
+  assert.equal(isGroupOneTopic("fazenda/grupo1/sensores/SS-03"), true);
+  assert.equal(isGroupOneTopic("fazenda/grupo2/sensores/SS-03"), false);
 });
 
 test("normalizes telemetry fields without inventing missing measurements", () => {
   const reading = parseTelemetry(
-    "grupo/1/fazenda-2/solo",
-    Buffer.from('{"fazenda":"Santa Luzia","sensor_id":"solo-01","temperatura":23.4,"umidade":61}'),
+    "fazenda/grupo1/sensores/SS-03",
+    Buffer.from('{"sensor":"SS-03","tipo":"sonda_solo","talhao":"T03","ts":"2026-10-08T12:00:00.000Z","valores":{"temp_solo_c":23.4,"umidade_10cm_pct":61}}'),
     "2026-10-08T12:00:00.000Z",
   );
 
   assert.deepEqual(reading, {
-    topic: "grupo/1/fazenda-2/solo",
+    topic: "fazenda/grupo1/sensores/SS-03",
     timestamp: "2026-10-08T12:00:00.000Z",
-    farm: "Santa Luzia",
-    sensorId: "solo-01",
-    sensor: "solo-01",
+    farm: "Fazenda Santa Helena",
+    sensor: "SS-03",
+    sensorId: "SS-03",
+    plot: "T03",
     temperature: 23.4,
     humidity: 61,
+    battery: null,
     value: undefined,
     unit: "",
   });
 });
 
-test("handles non-JSON MQTT payloads without fabricating sensor data", () => {
-  const reading = parseTelemetry("grupo/1/fazenda-1/raw", Buffer.from("online"));
-  assert.equal(reading.value, "online");
-  assert.equal(reading.farm, null);
-  assert.equal(reading.sensorId, null);
-  assert.equal(reading.temperature, null);
-  assert.equal(reading.humidity, null);
+test("ignores non-sensor MQTT topics and malformed sensor JSON", () => {
+  assert.equal(parseTelemetry("fazenda/grupo1/status", Buffer.from("online")), null);
+  assert.equal(parseTelemetry("fazenda/grupo1/sensores/SS-01", Buffer.from("{bad json")), null);
 });
 
 test("normalizes nested MongoDB sensor telemetry", () => {

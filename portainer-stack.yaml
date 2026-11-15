@@ -13,7 +13,7 @@ services:
       MONGODB_URI: ${MONGODB_URI:?Defina MONGODB_URI nos ambientes da stack}
       REDIS_URL: ${REDIS_URL:?Defina REDIS_URL nos ambientes da stack}
       MQTT_URL: ${MQTT_URL:?Defina MQTT_URL nos ambientes da stack}
-      MQTT_TOPIC: "${MQTT_TOPIC:-grupo/1/#}"
+      MQTT_TOPIC: "${MQTT_TOPIC:-fazenda/grupo1/#}"
       MINIO_ENDPOINT: ${MINIO_ENDPOINT:?Defina MINIO_ENDPOINT nos ambientes da stack}
       MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY:?Defina MINIO_ACCESS_KEY nos ambientes da stack}
       MINIO_SECRET_KEY: ${MINIO_SECRET_KEY:?Defina MINIO_SECRET_KEY nos ambientes da stack}
